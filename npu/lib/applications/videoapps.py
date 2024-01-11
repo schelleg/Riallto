@@ -127,7 +127,8 @@ class VideoApplication:
     _camres = None
     _resize = None
     _cap = None
-
+    _video0_type = cv2.CAP_MSMF
+    
     def __init__(self, filename, videosource: Union[int, str] = 0,
                  pxtype_in: pxtype = pxtype.RGBA,
                  pxtype_out: pxtype = pxtype.RGBA):
@@ -159,7 +160,8 @@ class VideoApplication:
     def _get_resolution(self, videosource):
         if isinstance(videosource, int):
             if videosource == 0:
-                prop = cv2.CAP_MSMF
+                # TODO: need test to determine if we are on a NUC device where video0_type would be USB / cv2.CAP_DSHOW
+                prop = self._video0_type
             else:
                 prop = cv2.CAP_DSHOW
             self._cap = cv2.VideoCapture(videosource, prop)
